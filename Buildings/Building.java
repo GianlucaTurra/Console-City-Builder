@@ -1,7 +1,6 @@
 package Buildings;
 
 import java.util.HashMap;
-import java.util.ArrayList;
 
 public abstract class Building {
     /*Abstract class is meant for inheritance by other classes and instances of it cannot be created from it*/
@@ -13,14 +12,32 @@ public abstract class Building {
     // ------------------------------------------------------------------------------------------------------- //
 
     // An HashMap is declared and initialized and immediately after defined as a class constructor
-    protected HashMap<String, Integer> upkeepMap;
-    public Building(HashMap<String, Integer> upkeepMap) {
+    protected HashMap<String, Double> upkeepMap;
+    static int tileNumber;
+    public Building(HashMap<String, Double> upkeepMap) {
         this.upkeepMap = upkeepMap;
     }
 
+    public static int chooseTile(int tile) {
+        tileNumber = tile;
+        return tileNumber;
+    }
+
+    // Static field modifier, meaning it can be called without creating a class instance
+    static double upkeepModifier = 1;
+    static double productionModifier = 1;
+
+    public void ChangeUpkeepModifier(double newModifier) {
+        upkeepModifier = newModifier;
+    }
+
+    public void ChangeProductionModifier(double newModifier) {
+        productionModifier = newModifier;
+    }
+
     // HashMaps declared to be inherited by subclasses of Buildings.Building
-    ArrayList<Integer> tilesList;
-    HashMap<String, Integer> materialsMap = new HashMap<>();
-    HashMap<String, Integer> productionMap = new HashMap<>();
+
+    public static HashMap<String, Double> materialsMap;
+    HashMap<String, Integer> productionMap;
     
 }
