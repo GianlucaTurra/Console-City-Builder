@@ -3,7 +3,7 @@ import java.util.Map;
 
 public class Buildings {
 
-    public static class House extends Building {
+    public static class HouseOld extends BuildingOld {
         public static final HashMap<String, Integer> DEFAULT_UPKEEP;
         static {
             DEFAULT_UPKEEP = new HashMap<>();
@@ -19,7 +19,7 @@ public class Buildings {
             }
             return dailyUpkeep;
         }
-        public House() {
+        public HouseOld() {
             super(DEFAULT_UPKEEP);
         }
     }

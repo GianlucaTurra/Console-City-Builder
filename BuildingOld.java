@@ -1,10 +1,10 @@
 import java.util.HashMap;
 import java.util.ArrayList;
 
-public abstract class Building {
+public abstract class BuildingOld {
 
     protected HashMap<String, Integer> upkeepMap = new HashMap<>();
-    public Building(HashMap<String, Integer> upkeepMap) {
+    public BuildingOld(HashMap<String, Integer> upkeepMap) {
         this.upkeepMap = upkeepMap;
     }
     ArrayList<Integer> tilesList;

@@ -1,12 +1,19 @@
 import java.util.HashMap;
 
+import Buildings.House;
+import Buildings.CropField;
+
+
 public class Game {
 
     public static void main(String[] args) {
-        Buildings.House house1 = new Buildings.House();
-        house1.inhabitants = 2;
-        HashMap<String, Integer> dailyHouseUpkeep = house1.houseUpkeep();
-        System.out.println(dailyHouseUpkeep);
+        House house1 = new House();
+        System.out.println(house1.houseInhabitants);
+        System.out.println(house1.returnUpkeep());
+        house1.changeUpkeepModifier(-0.1);
+        System.out.println(house1.returnUpkeep());
+        CropField cropField1 = new CropField();
+        System.out.println(cropField1.);
     }
 
 }
