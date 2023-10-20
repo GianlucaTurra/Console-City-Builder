@@ -7,19 +7,22 @@ public class CropField extends Building{
 
     int workersNeeded = 3;
 
+
     // Declaring default Upkeep and Production
     public static final Map<String, Double> DEFAULT_UPKEEP;
     static {
         DEFAULT_UPKEEP = new HashMap<>();
+        DEFAULT_UPKEEP.put("Food", 0.0);
         DEFAULT_UPKEEP.put("Wood", 0.0);
         DEFAULT_UPKEEP.put("Water", 25.0);
-        DEFAULT_UPKEEP.put("Food", 0.0);
     }
 
     public static final Map<String, Double> DEFAULT_PRODUCTION;
     static {
         DEFAULT_PRODUCTION = new HashMap<>();
         DEFAULT_PRODUCTION.put("Food", 25.0);
+        DEFAULT_PRODUCTION.put("Wood", 0.0);
+        DEFAULT_PRODUCTION.put("Water", 0.0);
     }
 
     // Definition of abstract methods from parent class

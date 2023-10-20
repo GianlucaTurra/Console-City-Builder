@@ -11,15 +11,15 @@ public class Game {
 
     public static void main(String[] args) {
         House house1 = new House();
-        //System.out.println(house1.houseInhabitants);
-        //System.out.println(house1.returnUpkeep());
+        System.out.println(house1.houseInhabitants);
+        System.out.println(house1.returnUpkeep());
         house1.changeUpkeepModifier(-0.1);
         System.out.println(house1.returnUpkeep());
         CropField cropField1 = new CropField();
         System.out.println(cropField1.returnProduction());
         Well well1 = new Well();
-        //daySettConsumption(Village.resourceMap, house1.returnUpkeep());
-        //daySettConsumption(Village.resourceMap, house1.returnUpkeep());
+        daySettConsumption(Village.resourceMap, house1.returnUpkeep());
+        daySettConsumption(Village.resourceMap, house1.returnUpkeep());
     }
 
     public static void daySettConsumption(Map<String, Double> settlementResources, Map<String, Double> dailyUpkeep) {

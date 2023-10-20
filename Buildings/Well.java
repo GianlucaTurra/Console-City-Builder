@@ -5,7 +5,19 @@ import java.util.Map;
 
 public class Well extends Building {
 
+    public static final Map<String, Double> DEFAULT_UPKEEP;
     static {
+        DEFAULT_UPKEEP = new HashMap<>();
+        DEFAULT_UPKEEP.put("Food", 0.0);
+        DEFAULT_UPKEEP.put("Wood", 0.0);
+        DEFAULT_UPKEEP.put("Water", 0.0);
+    }
+
+    public static Map<String, Double> DEFAULT_PRODUCTION;
+    static {
+        DEFAULT_PRODUCTION = new HashMap<>();
+        DEFAULT_PRODUCTION.put("Food", 0.0);
+        DEFAULT_PRODUCTION.put("Wood", 0.0);
         DEFAULT_PRODUCTION.put("Water", 100.0);
     }
 

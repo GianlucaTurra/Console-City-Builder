@@ -7,8 +7,21 @@ import java.util.Random;
 public class House extends Building{
 
     // Default upkeep for the one house
-    public static final Map<String, Double> DEFAULT_UPKEEP = new HashMap<>();;
-    public static final Map<String, Double> DEFAULT_PRODUCTION  = new HashMap<>();
+    public static final Map<String, Double> DEFAULT_UPKEEP;
+    static {
+        DEFAULT_UPKEEP = new HashMap<>();
+        DEFAULT_UPKEEP.put("Food", 3.0);
+        DEFAULT_UPKEEP.put("Wood", 5.0);
+        DEFAULT_UPKEEP.put("Water", 2.5);
+    }
+    public static final Map<String, Double> DEFAULT_PRODUCTION;
+    static {
+        DEFAULT_PRODUCTION = new HashMap<>();
+        DEFAULT_PRODUCTION.put("Food", 0.0);
+        DEFAULT_PRODUCTION.put("Wood", 0.0);
+        DEFAULT_PRODUCTION.put("Water", 0.0);
+    }
+
 
 
     // Generate number of inhabitants per house
