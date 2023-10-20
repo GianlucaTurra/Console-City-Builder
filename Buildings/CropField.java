@@ -5,10 +5,18 @@ import java.util.Map;
 
 public class CropField extends Building{
 
+    // ----------------------------------------------------------------------------------------------------------------
+    // CONSTRUCTOR
+    // ----------------------------------------------------------------------------------------------------------------
+    public CropField() {
+        super(DEFAULT_UPKEEP, DEFAULT_PRODUCTION);
+    }
+
     int workersNeeded = 3;
 
-
-    // Declaring default Upkeep and Production
+    // ----------------------------------------------------------------------------------------------------------------
+    // Defining the default Maps for upkeep and production
+    // ----------------------------------------------------------------------------------------------------------------
     public static final Map<String, Double> DEFAULT_UPKEEP;
     static {
         DEFAULT_UPKEEP = new HashMap<>();
@@ -16,7 +24,6 @@ public class CropField extends Building{
         DEFAULT_UPKEEP.put("Wood", 0.0);
         DEFAULT_UPKEEP.put("Water", 25.0);
     }
-
     public static final Map<String, Double> DEFAULT_PRODUCTION;
     static {
         DEFAULT_PRODUCTION = new HashMap<>();
@@ -25,7 +32,9 @@ public class CropField extends Building{
         DEFAULT_PRODUCTION.put("Water", 0.0);
     }
 
-    // Definition of abstract methods from parent class
+    // ----------------------------------------------------------------------------------------------------------------
+    // Overriding superclass' abstract functions
+    // ----------------------------------------------------------------------------------------------------------------
     @Override
     public Map<String, Double> returnUpkeep() {
         Map<String, Double> dailyUpkeep = new HashMap<>();
@@ -34,7 +43,6 @@ public class CropField extends Building{
         }
         return dailyUpkeep;
     }
-
     @Override
     public Map<String, Double> returnProduction() {
         Map<String, Double> dailyProduction = new HashMap<>();
@@ -43,10 +51,4 @@ public class CropField extends Building{
         }
         return dailyProduction;
     }
-
-    // Class constructors
-    public CropField() {
-        super(DEFAULT_UPKEEP, DEFAULT_PRODUCTION);
-    }
-
 }

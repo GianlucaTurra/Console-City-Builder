@@ -6,8 +6,9 @@ import java.util.Map;
 
 public abstract class Building {
 
-
-    // Stuff for the constructor
+    // ----------------------------------------------------------------------------------------------------------------
+    // CONSTRUCTOR
+    // ----------------------------------------------------------------------------------------------------------------
     protected Map<String, Double> upkeepMap;
     protected Map<String, Double> productionMap;
     // Definition of the constructor
@@ -16,12 +17,11 @@ public abstract class Building {
         this.productionMap = productionMap;
     }
 
-
-    // Default upkeep/production modifier
+    // ----------------------------------------------------------------------------------------------------------------
+    // Default upkeep and production modifiers and abstract methods to change them
+    // ----------------------------------------------------------------------------------------------------------------
     double upkeepModifier = 1;
     double productionModifier = 1;
-
-    // Method to change upkeep/production modifier
     public void changeUpkeepModifier(double mod) {
         upkeepModifier += mod;
     }
@@ -29,13 +29,10 @@ public abstract class Building {
         productionModifier += mod;
     }
 
-
-    // Abstract methods for buildings
+    // ----------------------------------------------------------------------------------------------------------------
+    // Abstract methods to return Maps
+    // ----------------------------------------------------------------------------------------------------------------
     public abstract Map<String, Double> returnUpkeep();
     public abstract Map<String, Double> returnProduction();
-
-
-    ArrayList<Integer> tilesList;
-    HashMap<String, Integer> materialsMap = new HashMap<>();
     
 }

@@ -5,6 +5,17 @@ import java.util.Map;
 
 public class Well extends Building {
 
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // CONSTRUCTOR
+    // ----------------------------------------------------------------------------------------------------------------
+    public Well() {
+        super(DEFAULT_UPKEEP, DEFAULT_PRODUCTION);
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // Defining the default Maps for upkeep and production
+    // ----------------------------------------------------------------------------------------------------------------
     public static final Map<String, Double> DEFAULT_UPKEEP;
     static {
         DEFAULT_UPKEEP = new HashMap<>();
@@ -12,7 +23,6 @@ public class Well extends Building {
         DEFAULT_UPKEEP.put("Wood", 0.0);
         DEFAULT_UPKEEP.put("Water", 0.0);
     }
-
     public static Map<String, Double> DEFAULT_PRODUCTION;
     static {
         DEFAULT_PRODUCTION = new HashMap<>();
@@ -21,11 +31,13 @@ public class Well extends Building {
         DEFAULT_PRODUCTION.put("Water", 100.0);
     }
 
+    // ----------------------------------------------------------------------------------------------------------------
+    // Overriding superclass' abstract functions
+    // ----------------------------------------------------------------------------------------------------------------
     @Override
     public Map<String, Double> returnUpkeep() {
-        return null;
+        return DEFAULT_UPKEEP;
     }
-
     @Override
     public Map<String, Double> returnProduction() {
         Map<String, Double> dailyProduction = new HashMap<>();
@@ -33,9 +45,5 @@ public class Well extends Building {
             dailyProduction.put(set.getKey(), set.getValue() * productionModifier);
         }
         return dailyProduction;
-    }
-
-    public Well() {
-        super(DEFAULT_UPKEEP, DEFAULT_PRODUCTION);
     }
 }

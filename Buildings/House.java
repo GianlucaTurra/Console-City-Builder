@@ -6,7 +6,16 @@ import java.util.Random;
 
 public class House extends Building{
 
-    // Default upkeep for the one house
+    // ----------------------------------------------------------------------------------------------------------------
+    // CONSTRUCTOR
+    // ----------------------------------------------------------------------------------------------------------------
+    public House() {
+        super(DEFAULT_UPKEEP, DEFAULT_PRODUCTION);
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // Defining the default Maps for upkeep and production
+    // ----------------------------------------------------------------------------------------------------------------
     public static final Map<String, Double> DEFAULT_UPKEEP;
     static {
         DEFAULT_UPKEEP = new HashMap<>();
@@ -22,15 +31,15 @@ public class House extends Building{
         DEFAULT_PRODUCTION.put("Water", 0.0);
     }
 
-
-
+    // ----------------------------------------------------------------------------------------------------------------
     // Generate number of inhabitants per house
+    // ----------------------------------------------------------------------------------------------------------------
     Random inhabitants = new Random();
     public double houseInhabitants = inhabitants.nextInt(10) + 1;
 
-
-
-    // Generate house upkeep based on number of inhabitants
+    // ----------------------------------------------------------------------------------------------------------------
+    // Overriding superclass' abstract functions
+    // ----------------------------------------------------------------------------------------------------------------
     @Override
     public Map<String, Double> returnUpkeep() {
         Map<String, Double> dailyUpkeep = new HashMap<>();
@@ -39,14 +48,8 @@ public class House extends Building{
         }
         return dailyUpkeep;
     }
-
     @Override
     public Map<String, Double> returnProduction() {
-        return null;
-    }
-
-    // Constructor
-    public House() {
-        super(DEFAULT_UPKEEP, DEFAULT_PRODUCTION);
+        return DEFAULT_PRODUCTION;
     }
 }

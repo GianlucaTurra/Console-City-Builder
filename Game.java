@@ -1,25 +1,73 @@
-import java.util.HashMap;
-import java.util.Map;
-
-import Buildings.House;
 import Buildings.CropField;
+import Buildings.House;
 import Buildings.Well;
 import Settlements.Village;
 
+import java.util.Map;
+import java.util.Scanner;
 
 public class Game {
 
-    public static void main(String[] args) {
-        House house1 = new House();
-        System.out.println(house1.houseInhabitants);
-        System.out.println(house1.returnUpkeep());
-        house1.changeUpkeepModifier(-0.1);
-        System.out.println(house1.returnUpkeep());
-        CropField cropField1 = new CropField();
-        System.out.println(cropField1.returnProduction());
-        Well well1 = new Well();
-        daySettConsumption(Village.resourceMap, house1.returnUpkeep());
-        daySettConsumption(Village.resourceMap, house1.returnUpkeep());
+    // ----------------------------------------------------------------------------------------------------------------
+    // THE GAME
+    // ----------------------------------------------------------------------------------------------------------------
+    static boolean gameIsOn = true;
+    void turnTheGameOff() {
+        gameIsOn = false;
+    }
+    public static void game() {
+        Village gameVillage = createVillage();
+        while(gameIsOn) {
+            String userCommand = getUserCommand();
+            receiveCommands(userCommand, gameVillage);
+        }
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // Village creation - First step of the game
+    // ----------------------------------------------------------------------------------------------------------------
+    static Village createVillage() {
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("Enter village name: ");
+        String villageName = keyboard.nextLine();
+        return new Village(villageName);
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // USER INPUT
+    // ----------------------------------------------------------------------------------------------------------------
+    static String getUserCommand() {
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("Enter a command: ");
+        return keyboard.nextLine();
+    }
+    static void receiveCommands(@org.jetbrains.annotations.NotNull String command, Village village) {
+        switch(command) {
+            case "create house":
+                House house = new House();
+                village.addBuildingsToVillage(house);
+                break;
+            case "create crop field":
+                CropField cropField = new CropField();
+                village.addBuildingsToVillage(cropField);
+                break;
+            case "create well":
+                Well well = new Well();
+                village.addBuildingsToVillage(well);
+                break;
+            case "show":
+                for (Object building:
+                        village.villageBuildings) {
+                    System.out.println(building);
+                }
+                break;
+            case "end game":
+                gameIsOn = false;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + command);
+        }
+
     }
 
     public static void daySettConsumption(Map<String, Double> settlementResources, Map<String, Double> dailyUpkeep) {
