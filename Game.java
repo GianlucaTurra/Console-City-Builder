@@ -12,9 +12,6 @@ public class Game {
     // THE GAME
     // ----------------------------------------------------------------------------------------------------------------
     static boolean gameIsOn = true;
-    void turnTheGameOff() {
-        gameIsOn = false;
-    }
     public static void game() {
         Village gameVillage = createVillage();
         while(gameIsOn) {
