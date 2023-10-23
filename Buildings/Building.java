@@ -1,10 +1,8 @@
 package Buildings;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Building {
+abstract class Building {
 
     // ----------------------------------------------------------------------------------------------------------------
     // CONSTRUCTOR
@@ -20,10 +18,20 @@ public abstract class Building {
     // ----------------------------------------------------------------------------------------------------------------
     // Default upkeep and production modifiers and abstract methods to change them
     // ----------------------------------------------------------------------------------------------------------------
-    double upkeepModifier = 1;
-    double productionModifier = 1;
+
+    // Upkeep modifier encapsulation
+    private double upkeepModifier = 1;
+    public double getUpkeepModifier() {
+        return upkeepModifier;
+    }
     public void changeUpkeepModifier(double mod) {
         upkeepModifier += mod;
+    }
+
+    // Production modifier encapsulation
+    private double productionModifier = 1;
+    public double getProductionModifier() {
+        return productionModifier;
     }
     public void changeProductionModifier(double mod) {
         productionModifier += mod;
@@ -32,7 +40,7 @@ public abstract class Building {
     // ----------------------------------------------------------------------------------------------------------------
     // Abstract methods to return Maps
     // ----------------------------------------------------------------------------------------------------------------
-    public abstract Map<String, Double> returnUpkeep();
-    public abstract Map<String, Double> returnProduction();
+    public abstract Map<String, Double> getDailyUpkeep();
+    public abstract Map<String, Double> getDailyProduction();
     
 }

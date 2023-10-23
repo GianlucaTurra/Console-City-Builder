@@ -14,6 +14,7 @@ public class Game {
     static boolean gameIsOn = true;
     public static void game() {
         Village gameVillage = createVillage();
+        gameVillage.getName();
         while(gameIsOn) {
             String userCommand = getUserCommand();
             receiveCommands(userCommand, gameVillage);
@@ -38,25 +39,23 @@ public class Game {
         System.out.println("Enter a command: ");
         return keyboard.nextLine();
     }
-    static void receiveCommands(@org.jetbrains.annotations.NotNull String command, Village village) {
+    static void receiveCommands(String command, Village village) {
         switch(command) {
             case "create house":
                 House house = new House();
-                village.addBuildingsToVillage(house);
+                village.addHouse(house);
                 break;
             case "create crop field":
                 CropField cropField = new CropField();
-                village.addBuildingsToVillage(cropField);
+                village.addCropField(cropField);
                 break;
             case "create well":
                 Well well = new Well();
-                village.addBuildingsToVillage(well);
+                village.addWell(well);
                 break;
             case "show":
-                for (Object building:
-                        village.villageBuildings) {
-                    System.out.println(building);
-                }
+                System.out.println("Village: " + village.getName());
+
                 break;
             case "end game":
                 gameIsOn = false;

@@ -14,16 +14,46 @@ public class Well extends Building {
     }
 
     // ----------------------------------------------------------------------------------------------------------------
+    // Workers needed encapsulation
+    // ----------------------------------------------------------------------------------------------------------------
+    private int workersNeeded = 0;
+    public int getWorkersNeeded() {
+        return workersNeeded;
+    }
+    public void setWorkersNeeded(int workersNeededModifier) {
+        this.workersNeeded += workersNeededModifier;
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
     // Defining the default Maps for upkeep and production
     // ----------------------------------------------------------------------------------------------------------------
-    public static final Map<String, Double> DEFAULT_UPKEEP;
+    private static final Map<String, Double> DEFAULT_UPKEEP;
     static {
         DEFAULT_UPKEEP = new HashMap<>();
         DEFAULT_UPKEEP.put("Food", 0.0);
         DEFAULT_UPKEEP.put("Wood", 0.0);
         DEFAULT_UPKEEP.put("Water", 0.0);
     }
-    public static Map<String, Double> DEFAULT_PRODUCTION;
+
+    public static Map<String, Double> getDefaultUpkeep() {
+        return DEFAULT_UPKEEP;
+    }
+
+    @Override
+    public Map<String, Double> getDailyUpkeep() {
+        Map<String, Double> dailyUpkeep = new HashMap<>();
+        for (Map.Entry<String, Double> set: DEFAULT_UPKEEP.entrySet()) {
+            dailyUpkeep.put(set.getKey(), set.getValue() * getUpkeepModifier());
+        }
+        return dailyUpkeep;
+    }
+
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // Overriding superclass' abstract functions
+    // ----------------------------------------------------------------------------------------------------------------
+
+    private static final Map<String, Double> DEFAULT_PRODUCTION;
     static {
         DEFAULT_PRODUCTION = new HashMap<>();
         DEFAULT_PRODUCTION.put("Food", 0.0);
@@ -31,18 +61,15 @@ public class Well extends Building {
         DEFAULT_PRODUCTION.put("Water", 100.0);
     }
 
-    // ----------------------------------------------------------------------------------------------------------------
-    // Overriding superclass' abstract functions
-    // ----------------------------------------------------------------------------------------------------------------
-    @Override
-    public Map<String, Double> returnUpkeep() {
-        return DEFAULT_UPKEEP;
+    public static Map<String, Double> getDefaultProduction() {
+        return DEFAULT_PRODUCTION;
     }
+
     @Override
-    public Map<String, Double> returnProduction() {
+    public Map<String, Double> getDailyProduction() {
         Map<String, Double> dailyProduction = new HashMap<>();
         for (Map.Entry<String, Double> set: DEFAULT_PRODUCTION.entrySet()) {
-            dailyProduction.put(set.getKey(), set.getValue() * productionModifier);
+            dailyProduction.put(set.getKey(), set.getValue() * getProductionModifier());
         }
         return dailyProduction;
     }
