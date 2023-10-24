@@ -1,8 +1,11 @@
 package Buildings;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
 public class Well extends Building {
 
 
@@ -17,10 +20,8 @@ public class Well extends Building {
     // Workers needed encapsulation
     // ----------------------------------------------------------------------------------------------------------------
     private int workersNeeded = 0;
-    public int getWorkersNeeded() {
-        return workersNeeded;
-    }
-    public void setWorkersNeeded(int workersNeededModifier) {
+
+    public void changeWorkersNeeded(int workersNeededModifier) {
         this.workersNeeded += workersNeededModifier;
     }
 
@@ -33,10 +34,6 @@ public class Well extends Building {
         DEFAULT_UPKEEP.put("Food", 0.0);
         DEFAULT_UPKEEP.put("Wood", 0.0);
         DEFAULT_UPKEEP.put("Water", 0.0);
-    }
-
-    public static Map<String, Double> getDefaultUpkeep() {
-        return DEFAULT_UPKEEP;
     }
 
     @Override
@@ -52,17 +49,12 @@ public class Well extends Building {
     // ----------------------------------------------------------------------------------------------------------------
     // Overriding superclass' abstract functions
     // ----------------------------------------------------------------------------------------------------------------
-
     private static final Map<String, Double> DEFAULT_PRODUCTION;
     static {
         DEFAULT_PRODUCTION = new HashMap<>();
         DEFAULT_PRODUCTION.put("Food", 0.0);
         DEFAULT_PRODUCTION.put("Wood", 0.0);
         DEFAULT_PRODUCTION.put("Water", 100.0);
-    }
-
-    public static Map<String, Double> getDefaultProduction() {
-        return DEFAULT_PRODUCTION;
     }
 
     @Override

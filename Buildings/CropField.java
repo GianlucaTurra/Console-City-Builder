@@ -1,8 +1,11 @@
 package Buildings;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
 public class CropField extends Building{
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -16,10 +19,8 @@ public class CropField extends Building{
     // Workers needed encapsulation
     // ----------------------------------------------------------------------------------------------------------------
     private int workersNeeded = 3;
-    public int getWorkersNeeded() {
-        return workersNeeded;
-    }
-    public void setWorkersNeeded(int workersNeededModifier) {
+
+    public void changeWorkersNeeded(int workersNeededModifier) {
         this.workersNeeded += workersNeededModifier;
     }
 
@@ -32,10 +33,6 @@ public class CropField extends Building{
         DEFAULT_UPKEEP.put("Food", 0.0);
         DEFAULT_UPKEEP.put("Wood", 0.0);
         DEFAULT_UPKEEP.put("Water", 25.0);
-    }
-
-    public Map<String, Double> getDefaultUpkeep() {
-        return DEFAULT_UPKEEP;
     }
 
     @Override
@@ -56,10 +53,6 @@ public class CropField extends Building{
         DEFAULT_PRODUCTION.put("Food", 25.0);
         DEFAULT_PRODUCTION.put("Wood", 0.0);
         DEFAULT_PRODUCTION.put("Water", 0.0);
-    }
-
-    public Map<String, Double> getDefaultProduction() {
-        return DEFAULT_PRODUCTION;
     }
 
     @Override

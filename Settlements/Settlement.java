@@ -1,5 +1,9 @@
 package Settlements;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 abstract class Settlement {
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -7,16 +11,6 @@ abstract class Settlement {
     // ----------------------------------------------------------------------------------------------------------------
     protected String name;
     public Settlement(String name) {
-        this.name = name;
-    }
-
-    // ----------------------------------------------------------------------------------------------------------------
-    // Encapsulation for name
-    // ----------------------------------------------------------------------------------------------------------------
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
         this.name = name;
     }
 }

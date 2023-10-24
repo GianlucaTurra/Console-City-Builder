@@ -14,7 +14,6 @@ public class Game {
     static boolean gameIsOn = true;
     public static void game() {
         Village gameVillage = createVillage();
-        gameVillage.getName();
         while(gameIsOn) {
             String userCommand = getUserCommand();
             receiveCommands(userCommand, gameVillage);

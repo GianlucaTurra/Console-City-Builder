@@ -1,9 +1,12 @@
 package Buildings;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+@Getter
 public class House extends Building{
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -18,9 +21,6 @@ public class House extends Building{
     // ----------------------------------------------------------------------------------------------------------------
     private final Random inhabitants = new Random();
     private final double houseInhabitants = inhabitants.nextInt(10) + 1;
-    double getHouseInhabitants() {
-        return houseInhabitants;
-    }
 
     // ----------------------------------------------------------------------------------------------------------------
     // Defining the default upkeep and encapsulation
@@ -31,10 +31,6 @@ public class House extends Building{
         DEFAULT_UPKEEP.put("Food", 3.0);
         DEFAULT_UPKEEP.put("Wood", 5.0);
         DEFAULT_UPKEEP.put("Water", 2.5);
-    }
-
-    public static Map<String, Double> getDefaultUpkeep() {
-        return DEFAULT_UPKEEP;
     }
 
     @Override
@@ -55,10 +51,6 @@ public class House extends Building{
         DEFAULT_PRODUCTION.put("Food", 0.0);
         DEFAULT_PRODUCTION.put("Wood", 0.0);
         DEFAULT_PRODUCTION.put("Water", 0.0);
-    }
-
-    public static Map<String, Double> getDefaultProduction() {
-        return DEFAULT_PRODUCTION;
     }
 
     @Override

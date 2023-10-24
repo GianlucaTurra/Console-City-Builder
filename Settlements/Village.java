@@ -11,13 +11,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Getter public class Village  extends Settlement{
+@Getter
+public class Village  extends Settlement{
 
     // ----------------------------------------------------------------------------------------------------------------
     // CONSTRUCTOR
     // ----------------------------------------------------------------------------------------------------------------
+    String name;
     public Village(String name) {
         super(name);
+        this.name = super.name;
         setBaseResourceMap();
         villageHouses = new ArrayList<>();
         villageCropFields = new ArrayList<>();
@@ -27,14 +30,14 @@ import java.util.Map;
     // ----------------------------------------------------------------------------------------------------------------
     // Encapsulation for name (overriding superclass)
     // ----------------------------------------------------------------------------------------------------------------
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-    @Override
-    public void setName(String name) {
-        super.setName(name);
-    }
+//    @Override
+//    public String getName() {
+//        return super.getName();
+//    }
+//    @Override
+//    public void setName(String name) {
+//        super.setName(name);
+//    }
 
     // ----------------------------------------------------------------------------------------------------------------
     // Encapsulation for villageTiles

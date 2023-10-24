@@ -1,5 +1,7 @@
 package Buildings;
 
+import lombok.Getter;
+
 import java.util.Map;
 
 abstract class Building {
@@ -20,19 +22,17 @@ abstract class Building {
     // ----------------------------------------------------------------------------------------------------------------
 
     // Upkeep modifier encapsulation
+    @Getter
     private double upkeepModifier = 1;
-    public double getUpkeepModifier() {
-        return upkeepModifier;
-    }
+
     public void changeUpkeepModifier(double mod) {
         upkeepModifier += mod;
     }
 
     // Production modifier encapsulation
+    @Getter
     private double productionModifier = 1;
-    public double getProductionModifier() {
-        return productionModifier;
-    }
+
     public void changeProductionModifier(double mod) {
         productionModifier += mod;
     }
