@@ -14,11 +14,19 @@ public class House extends Building{
     // ----------------------------------------------------------------------------------------------------------------
     public House() {
         super(DEFAULT_UPKEEP, DEFAULT_PRODUCTION);
+        this.upkeepModifier = super.getUpkeepModifier();
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    // Generate number of inhabitants per house
+    // Generate base statistics for House object
     // ----------------------------------------------------------------------------------------------------------------
+    private double upkeepModifier;
+    @Override
+    public void changeUpkeepModifier(double mod) {
+        super.changeUpkeepModifier(mod);
+        this.upkeepModifier = super.getUpkeepModifier();
+    }
+
     private final Random inhabitants = new Random();
     private final double houseInhabitants = inhabitants.nextInt(10) + 1;
 
@@ -36,9 +44,7 @@ public class House extends Building{
     @Override
     public Map<String, Double> getDailyUpkeep() {
         Map<String, Double> dailyUpkeep = new HashMap<>();
-        for (Map.Entry<String, Double> set: DEFAULT_UPKEEP.entrySet()) {
-            dailyUpkeep.put(set.getKey(), set.getValue() * getUpkeepModifier() * houseInhabitants);
-        }
+        DEFAULT_UPKEEP.forEach((key, value) -> dailyUpkeep.put(key, value * getUpkeepModifier() * houseInhabitants));
         return dailyUpkeep;
     }
 
