@@ -24,7 +24,6 @@ abstract class Building {
     // Upkeep modifier encapsulation
     @Getter
     private double upkeepModifier = 1;
-
     public void changeUpkeepModifier(double mod) {
         upkeepModifier += mod;
     }
@@ -32,10 +31,13 @@ abstract class Building {
     // Production modifier encapsulation
     @Getter
     private double productionModifier = 1;
-
     public void changeProductionModifier(double mod) {
         productionModifier += mod;
     }
+
+    @Getter
+    private double constructionModifier = 1;
+    public void changeConstructionModifier(double mod) { productionModifier += mod; }
 
     // ----------------------------------------------------------------------------------------------------------------
     // Abstract methods to return Maps

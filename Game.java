@@ -52,9 +52,14 @@ public class Game {
                 Well well = new Well();
                 village.addWell(well);
                 break;
+            case "new day":
+                // new day event
+                break;
             case "show":
                 System.out.println("Village: " + village.getName());
-
+                System.out.println("Village size: " + village.getSettlementSize());
+                System.out.println("Village population: " + village.getSettlementPopulation());
+                System.out.println("Village resources: " + village.getResourceMap());
                 break;
             case "end game":
                 gameIsOn = false;

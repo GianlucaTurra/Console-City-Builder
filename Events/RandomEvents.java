@@ -1,11 +1,9 @@
 package Events;
 
-import Buildings.CropField;
 import Settlements.Village;
 import lombok.NonNull;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Random;
 
 public class RandomEvents {
     public static void tarrasqueAttack(@NonNull Village village) {
@@ -18,7 +16,7 @@ public class RandomEvents {
 
     public static void goblinRaid(@NonNull Village village) {
         village.reducePopulation(0.1);
-        village.getResourceMap().replaceAll((k, v) -> v * 0.8);
+        village.getResourceMap().replaceAll((k, v) -> v * 0.85);
     }
 
     public static void flooding(@NonNull Village village) {
@@ -41,5 +39,15 @@ public class RandomEvents {
 
     public static void reallyGoodHarvest(@NonNull Village village) {
         village.changeVillageCropFieldsProduction(0.25);
+    }
+
+    public static void newSettlers(@NonNull Village village) {
+        Random random = new Random();
+        int ranSettlers = random.nextInt(1, 10);
+        village.changeVillagePopulation(ranSettlers);
+    }
+
+    public static void giftFromKing(@NonNull Village village) {
+        village.updateResourceMap(100, 100, 100, 100);
     }
 }

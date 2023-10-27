@@ -24,24 +24,7 @@ public class Village  extends Settlement{
         villageHouses = new ArrayList<>();
         villageCropFields = new ArrayList<>();
         villageWells = new ArrayList<>();
-    }
-
-    // ----------------------------------------------------------------------------------------------------------------
-    // Definition of village tiles, size, inhabitants
-    // ----------------------------------------------------------------------------------------------------------------
-    private int villageTiles = 20;
-    public void changeVillageTiles(int modifier) {
-        villageTiles += modifier;
-    }
-
-    private int villageSize = 0;
-    public void changeVillageSize(int modifier) {
-        villageSize += modifier;
-    }
-
-    private int villagePopulation = 0;
-    public void changeVillagePopulation(int modifier) {
-        villagePopulation += modifier;
+        villageTiles = 20;
     }
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -52,40 +35,40 @@ public class Village  extends Settlement{
     private final List<Well> villageWells;
 
     public void addHouse(House house) {
-        if (villageSize == villageTiles) {
-            System.out.println("No more room for buildings in the village!");
-        } else {
+        if (checkSlots() && checkResources(house.getConstructionCost())) {
             villageHouses.add(house);
-            villageSize += 1;
+            applyConstructionCosts(house.getConstructionCost());
+            settlementSize += 1;
             changeVillagePopulation((int)house.getHouseInhabitants());
         }
     }
     public void addCropField(CropField cropField) {
-        if (villageSize == villageTiles) {
-            System.out.println("No more room for buildings in the village!");
-        } else {
+        if (checkSlots() && checkResources(cropField.getConstructionCost())) {
             villageCropFields.add(cropField);
-            villageSize += 1;
+            applyConstructionCosts(cropField.getConstructionCost());
+            settlementSize += 1;
         }
     }
     public void addWell(Well well) {
-        if (villageSize == villageTiles) {
-            System.out.println("No more room for buildings in the village!");
-        } else {
+        if (checkSlots() && checkResources(well.getConstructionCost())) {
             villageWells.add(well);
-            villageSize += 1;
+            applyConstructionCosts(well.getConstructionCost());
+            settlementSize += 1;
         }
     }
 
     // ----------------------------------------------------------------------------------------------------------------
     // Defining the default production Map
     // ----------------------------------------------------------------------------------------------------------------
-    private static final Map<String, Double> DAILY_PRODUCTION;
-    static {
-        DAILY_PRODUCTION = new HashMap<>();
-        DAILY_PRODUCTION.put("Food", 50.0);
-        DAILY_PRODUCTION.put("Wood", 50.0);
-        DAILY_PRODUCTION.put("Water", 50.0);
+    @Getter
+    private static final Map<String, Double> DAILY_PRODUCTION = initDailyProductionMap();
+    private static Map<String, Double> initDailyProductionMap() {
+        Map<String, Double> defDailyProdMap = new HashMap<>();
+        defDailyProdMap.put("Food", 50.0);
+        defDailyProdMap.put("Wood", 50.0);
+        defDailyProdMap.put("Water", 50.0);
+        defDailyProdMap.put("Stone", 25.0);
+        return defDailyProdMap;
     }
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -93,26 +76,56 @@ public class Village  extends Settlement{
     // ----------------------------------------------------------------------------------------------------------------
     private final Map<String, Double> resourceMap = new HashMap<>();
 
-    public void updateResourceMap(double food, double wood, double water) {
+    public void updateResourceMap(double food, double wood, double water, double stone) {
         resourceMap.put("Food", resourceMap.get("Food") + food);
         resourceMap.put("Wood", resourceMap.get("Wood") + wood);
         resourceMap.put("Water", resourceMap.get("Water") + water);
+        resourceMap.put("Stone", resourceMap.get("Stone") + stone);
     }
     public void setBaseResourceMap() {
         resourceMap.put("Food", 200.0);
         resourceMap.put("Wood", 200.0);
         resourceMap.put("Water", 200.0);
+        resourceMap.put("Stone", 200.0);
     }
 
     // ----------------------------------------------------------------------------------------------------------------
     // Village stats modifying methods
     // ----------------------------------------------------------------------------------------------------------------
     public void reducePopulation(double killPercentage) {
-        int modifier = (int) (villagePopulation * killPercentage) * (-1);
+        int modifier = (int) (settlementPopulation * killPercentage) * (-1);
         changeVillagePopulation(modifier);
     }
 
     public void changeVillageCropFieldsProduction(double modifier) {
         villageCropFields.forEach(cropField -> cropField.changeProductionModifier(modifier));
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // Utils methods for village methods
+    // ----------------------------------------------------------------------------------------------------------------
+    private boolean checkSlots() {
+        if (settlementSize == villageTiles) {
+            System.out.println("No more room for buildings in the village!");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean checkResources(Map<String, Double> buildingConstructionMap) {
+        for (Map.Entry<String, Double> villageEntry: getResourceMap().entrySet()) {
+            for (Map.Entry<String, Double> buildingEntry: buildingConstructionMap.entrySet()) {
+                if (villageEntry.getValue() - buildingEntry.getValue() < 0) {
+                    System.out.println("Not enough " + villageEntry.getKey() + " for this building.");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void applyConstructionCosts(Map<String, Double> buildingConstructionMap) {
+        resourceMap.forEach((k, v) -> resourceMap.put(k, v - buildingConstructionMap.get(k)));
     }
 }

@@ -33,12 +33,14 @@ public class House extends Building{
     // ----------------------------------------------------------------------------------------------------------------
     // Defining the default upkeep and encapsulation
     // ----------------------------------------------------------------------------------------------------------------
-    private static final Map<String, Double> DEFAULT_UPKEEP;
-    static {
-        DEFAULT_UPKEEP = new HashMap<>();
-        DEFAULT_UPKEEP.put("Food", 3.0);
-        DEFAULT_UPKEEP.put("Wood", 5.0);
-        DEFAULT_UPKEEP.put("Water", 2.5);
+    private static final Map<String, Double> DEFAULT_UPKEEP = initUpkeepMap();
+    private static Map<String, Double> initUpkeepMap() {
+        Map<String, Double> defUpkeepMap = new HashMap<>();
+        defUpkeepMap.put("Food", 3.0);
+        defUpkeepMap.put("Wood", 5.0);
+        defUpkeepMap.put("Water", 2.5);
+        defUpkeepMap.put("Stone", 0.0);
+        return defUpkeepMap;
     }
 
     @Override
@@ -49,18 +51,41 @@ public class House extends Building{
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    // Defining default production and encapsulation
+    // Defining default production and overriding method
     // ----------------------------------------------------------------------------------------------------------------
-    private static final Map<String, Double> DEFAULT_PRODUCTION;
-    static {
-        DEFAULT_PRODUCTION = new HashMap<>();
-        DEFAULT_PRODUCTION.put("Food", 0.0);
-        DEFAULT_PRODUCTION.put("Wood", 0.0);
-        DEFAULT_PRODUCTION.put("Water", 0.0);
+    @Getter
+    private static final Map<String, Double> DEFAULT_PRODUCTION = initProductionMap();
+    private static Map<String, Double> initProductionMap() {
+        Map<String, Double> defProdMap = new HashMap<>();
+        defProdMap.put("Food", 0.0);
+        defProdMap.put("Wood", 0.0);
+        defProdMap.put("Water", 0.0);
+        defProdMap.put("Stone", 0.0);
+        return defProdMap;
     }
 
     @Override
     public Map<String, Double> getDailyProduction() {
         return DEFAULT_PRODUCTION;
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // Defining default construction cost and overriding method
+    // ----------------------------------------------------------------------------------------------------------------
+    @Getter
+    private static final Map<String, Double> DEFAULT_CONSTRUCTION_COST = initConstructionMap();
+    private static Map<String, Double> initConstructionMap() {
+        Map<String, Double> defConstMap = new HashMap<>();
+        defConstMap.put("Food", 0.0);
+        defConstMap.put("Wood", 50.0);
+        defConstMap.put("Water", 0.0);
+        defConstMap.put("Stone", 50.0);
+        return defConstMap;
+    }
+
+    public Map<String, Double> getConstructionCost() {
+        Map<String, Double> constructionCostMap = new HashMap<>();
+        getDEFAULT_CONSTRUCTION_COST().forEach((k, v) -> constructionCostMap.put(k, v * getConstructionModifier()));
+        return constructionCostMap;
     }
 }
