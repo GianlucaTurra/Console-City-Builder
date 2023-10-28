@@ -8,25 +8,16 @@ import java.util.Map;
 @Getter
 public class Well extends Building {
 
-
     // ----------------------------------------------------------------------------------------------------------------
-    // CONSTRUCTOR
-    // ----------------------------------------------------------------------------------------------------------------
-    public Well() {
-        super(DEFAULT_UPKEEP, DEFAULT_PRODUCTION);
-    }
-
-    // ----------------------------------------------------------------------------------------------------------------
-    // Workers needed encapsulation
+    // WELL WORKERS
     // ----------------------------------------------------------------------------------------------------------------
     private int workersNeeded = 0;
-
     public void changeWorkersNeeded(int workersNeededModifier) {
-        this.workersNeeded += workersNeededModifier;
+        workersNeeded += workersNeededModifier;
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    // Defining the default Maps for upkeep and production
+    // WELL DAILY UPKEEP
     // ----------------------------------------------------------------------------------------------------------------
     @Getter
     private static final Map<String, Double> DEFAULT_UPKEEP = initUpkeepMap();
@@ -39,16 +30,22 @@ public class Well extends Building {
         return defUpkeepMap;
     }
 
+    private double upkeepModifier = getBaseUpkeepModifier();
+    @Override
+    public void changeUpkeepModifier(double mod) {
+        upkeepModifier += mod;
+    }
+
     @Override
     public Map<String, Double> getDailyUpkeep() {
         Map<String, Double> dailyUpkeep = new HashMap<>();
-        DEFAULT_UPKEEP.forEach((key, value) -> dailyUpkeep.put(key, value * getUpkeepModifier()));
+        DEFAULT_UPKEEP.forEach((k, v) -> dailyUpkeep.put(k, v * upkeepModifier));
         return dailyUpkeep;
     }
 
 
     // ----------------------------------------------------------------------------------------------------------------
-    // Overriding superclass' abstract functions
+    // WELL DAILY PRODUCTION
     // ----------------------------------------------------------------------------------------------------------------
     @Getter
     private static final Map<String, Double> DEFAULT_PRODUCTION = initProductionMap();
@@ -61,17 +58,21 @@ public class Well extends Building {
         return defProdMap;
     }
 
+    private double productionModifier = getBaseProductionModifier();
+    @Override
+    public void changeProductionModifier(double mod) {
+        productionModifier += mod;
+    }
+
     @Override
     public Map<String, Double> getDailyProduction() {
         Map<String, Double> dailyProduction = new HashMap<>();
-        for (Map.Entry<String, Double> set: DEFAULT_PRODUCTION.entrySet()) {
-            dailyProduction.put(set.getKey(), set.getValue() * getProductionModifier());
-        }
+        DEFAULT_PRODUCTION.forEach((k, v) -> dailyProduction.put(k, v * productionModifier));
         return dailyProduction;
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    // Defining default construction cost and overriding method
+    // WELL CONSTRUCTION COST
     // ----------------------------------------------------------------------------------------------------------------
     @Getter
     private static final Map<String, Double> DEFAULT_CONSTRUCTION_COST = initConstructionMap();
@@ -84,9 +85,15 @@ public class Well extends Building {
         return defConstMap;
     }
 
+    private double constructionModifier = getBaseConstructionModifier();
+    @Override
+    public void changeConstructionModifier(double mod) {
+        constructionModifier += mod;
+    }
+
     public Map<String, Double> getConstructionCost() {
         Map<String, Double> constructionCostMap = new HashMap<>();
-        DEFAULT_CONSTRUCTION_COST.forEach((k, v) -> constructionCostMap.put(k, v * getConstructionModifier()));
+        DEFAULT_CONSTRUCTION_COST.forEach((k, v) -> constructionCostMap.put(k, v * constructionModifier));
         return constructionCostMap;
     }
 }

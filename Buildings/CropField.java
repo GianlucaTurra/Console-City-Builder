@@ -9,23 +9,15 @@ import java.util.Map;
 public class CropField extends Building{
 
     // ----------------------------------------------------------------------------------------------------------------
-    // CONSTRUCTOR
-    // ----------------------------------------------------------------------------------------------------------------
-    public CropField() {
-        super(DEFAULT_UPKEEP, DEFAULT_PRODUCTION);
-    }
-
-    // ----------------------------------------------------------------------------------------------------------------
-    // Workers needed encapsulation
+    // CROP FIELD WORKERS
     // ----------------------------------------------------------------------------------------------------------------
     private int workersNeeded = 3;
-
     public void changeWorkersNeeded(int workersNeededModifier) {
         this.workersNeeded += workersNeededModifier;
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    // Default upkeep map and get methods
+    // CROP FIELD DAILY UPKEEP
     // ----------------------------------------------------------------------------------------------------------------
     @Getter
     private static final Map<String, Double> DEFAULT_UPKEEP = initUpkeepMap();
@@ -38,17 +30,21 @@ public class CropField extends Building{
         return defUpkeepMap;
     }
 
+    private double upkeepModifier = getBaseUpkeepModifier();
+    @Override
+    public void changeUpkeepModifier(double mod) {
+        upkeepModifier += mod;
+    }
+
     @Override
     public Map<String, Double> getDailyUpkeep() {
         Map<String, Double> dailyUpkeep = new HashMap<>();
-        for (Map.Entry<String, Double> set: DEFAULT_UPKEEP.entrySet()) {
-            dailyUpkeep.put(set.getKey(), set.getValue() * getUpkeepModifier());
-        }
+        DEFAULT_UPKEEP.forEach((k, v) -> dailyUpkeep.put(k, v * upkeepModifier));
         return dailyUpkeep;
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    // Default production map and get methods
+    // CROP FIELD DAILY PRODUCTION
     // ----------------------------------------------------------------------------------------------------------------
     @Getter
     private static final Map<String, Double> DEFAULT_PRODUCTION = initProductionMap();
@@ -61,17 +57,21 @@ public class CropField extends Building{
         return defProdMap;
     }
 
+    private double productionModifier = getBaseProductionModifier();
+    @Override
+    public void changeProductionModifier(double mod) {
+        productionModifier += mod;
+    }
+
     @Override
     public Map<String, Double> getDailyProduction() {
         Map<String, Double> dailyProduction = new HashMap<>();
-        for (Map.Entry<String, Double> set: DEFAULT_PRODUCTION.entrySet()) {
-            dailyProduction.put(set.getKey(), set.getValue() * getProductionModifier());
-        }
+        DEFAULT_PRODUCTION.forEach((k, v) -> dailyProduction.put(k, v * productionModifier));
         return dailyProduction;
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    // Defining default construction cost and overriding method
+    // CROP FIELD CONSTRUCTION COST
     // ----------------------------------------------------------------------------------------------------------------
     @Getter
     private static final Map<String, Double> DEFAULT_CONSTRUCTION_COST = initConstructionMap();
@@ -84,9 +84,15 @@ public class CropField extends Building{
         return defConstMap;
     }
 
+    private double constructionModifier = getConstructionModifier();
+    @Override
+    public void changeConstructionModifier(double mod) {
+        constructionModifier += mod;
+    }
+
     public Map<String, Double> getConstructionCost() {
         Map<String, Double> constructionCostMap = new HashMap<>();
-        DEFAULT_CONSTRUCTION_COST.forEach((k, v) -> constructionCostMap.put(k, v * getConstructionModifier()));
+        DEFAULT_CONSTRUCTION_COST.forEach((k, v) -> constructionCostMap.put(k, v * constructionModifier));
         return constructionCostMap;
     }
 

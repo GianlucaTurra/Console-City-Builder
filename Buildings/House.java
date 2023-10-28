@@ -10,28 +10,13 @@ import java.util.Random;
 public class House extends Building{
 
     // ----------------------------------------------------------------------------------------------------------------
-    // CONSTRUCTOR
+    // HOUSE INHABITANTS
     // ----------------------------------------------------------------------------------------------------------------
-    public House() {
-        super(DEFAULT_UPKEEP, DEFAULT_PRODUCTION);
-        this.upkeepModifier = super.getUpkeepModifier();
-    }
+    private final Random random = new Random();
+    private final double houseInhabitants = random.nextInt(10) + 1;
 
     // ----------------------------------------------------------------------------------------------------------------
-    // Generate base statistics for House object
-    // ----------------------------------------------------------------------------------------------------------------
-    private double upkeepModifier;
-    @Override
-    public void changeUpkeepModifier(double mod) {
-        super.changeUpkeepModifier(mod);
-        this.upkeepModifier = super.getUpkeepModifier();
-    }
-
-    private final Random inhabitants = new Random();
-    private final double houseInhabitants = inhabitants.nextInt(10) + 1;
-
-    // ----------------------------------------------------------------------------------------------------------------
-    // Defining the default upkeep and encapsulation
+    // HOUSE UPKEEP
     // ----------------------------------------------------------------------------------------------------------------
     private static final Map<String, Double> DEFAULT_UPKEEP = initUpkeepMap();
     private static Map<String, Double> initUpkeepMap() {
@@ -43,15 +28,21 @@ public class House extends Building{
         return defUpkeepMap;
     }
 
+    private double upkeepModifier = super.getBaseUpkeepModifier();
+    @Override
+    public void changeUpkeepModifier(double mod) {
+        upkeepModifier += mod;
+    }
+
     @Override
     public Map<String, Double> getDailyUpkeep() {
         Map<String, Double> dailyUpkeep = new HashMap<>();
-        DEFAULT_UPKEEP.forEach((key, value) -> dailyUpkeep.put(key, value * getUpkeepModifier() * houseInhabitants));
+        DEFAULT_UPKEEP.forEach((key, value) -> dailyUpkeep.put(key, value * upkeepModifier * houseInhabitants));
         return dailyUpkeep;
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    // Defining default production and overriding method
+    // HOUSE DAILY PRODUCTION
     // ----------------------------------------------------------------------------------------------------------------
     @Getter
     private static final Map<String, Double> DEFAULT_PRODUCTION = initProductionMap();
@@ -64,13 +55,21 @@ public class House extends Building{
         return defProdMap;
     }
 
+    private double productionModifier = getBaseProductionModifier();
+    @Override
+    public void changeProductionModifier(double mod) {
+        productionModifier += mod;
+    }
+
     @Override
     public Map<String, Double> getDailyProduction() {
-        return DEFAULT_PRODUCTION;
+        Map<String, Double> dailyProductionMap = new HashMap<>();
+        DEFAULT_PRODUCTION.forEach((k, v) -> dailyProductionMap.put(k, v * productionModifier));
+        return dailyProductionMap;
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    // Defining default construction cost and overriding method
+    // HOUSE CONSTRUCTION COST
     // ----------------------------------------------------------------------------------------------------------------
     @Getter
     private static final Map<String, Double> DEFAULT_CONSTRUCTION_COST = initConstructionMap();
@@ -83,9 +82,15 @@ public class House extends Building{
         return defConstMap;
     }
 
+    private double constructionModifier = getBaseConstructionModifier();
+    @Override
+    public void changeConstructionModifier(double mod) {
+        constructionModifier += mod;
+    }
+
     public Map<String, Double> getConstructionCost() {
         Map<String, Double> constructionCostMap = new HashMap<>();
-        getDEFAULT_CONSTRUCTION_COST().forEach((k, v) -> constructionCostMap.put(k, v * getConstructionModifier()));
+        getDEFAULT_CONSTRUCTION_COST().forEach((k, v) -> constructionCostMap.put(k, v * constructionModifier));
         return constructionCostMap;
     }
 }

@@ -25,7 +25,7 @@ public class Game {
     // ----------------------------------------------------------------------------------------------------------------
     static Village createVillage() {
         Scanner keyboard = new Scanner(System.in);
-        System.out.println("Enter village name: ");
+        System.out.print("Enter village name: ");
         String villageName = keyboard.nextLine();
         return new Village(villageName);
     }
@@ -35,7 +35,7 @@ public class Game {
     // ----------------------------------------------------------------------------------------------------------------
     static String getUserCommand() {
         Scanner keyboard = new Scanner(System.in);
-        System.out.println("Enter a command: ");
+        System.out.print("Enter a command: ");
         return keyboard.nextLine();
     }
     static void receiveCommands(String command, Village village) {
@@ -65,7 +65,7 @@ public class Game {
                 gameIsOn = false;
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + command);
+                System.out.println("You entered no valid command, please try again. ");
         }
 
     }

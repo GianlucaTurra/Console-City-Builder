@@ -1,48 +1,32 @@
 package Buildings;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
 
+@Getter @Setter
 abstract class Building {
 
     // ----------------------------------------------------------------------------------------------------------------
-    // CONSTRUCTOR
-    // ----------------------------------------------------------------------------------------------------------------
-    protected Map<String, Double> upkeepMap;
-    protected Map<String, Double> productionMap;
-    // Definition of the constructor
-    public Building(Map<String, Double> upkeepMap, Map<String, Double> productionMap) {
-        this.upkeepMap = upkeepMap;
-        this.productionMap = productionMap;
-    }
-
-    // ----------------------------------------------------------------------------------------------------------------
-    // Default upkeep and production modifiers and abstract methods to change them
+    // Default modifiers and abstract methods to change them
     // ----------------------------------------------------------------------------------------------------------------
 
-    // Upkeep modifier encapsulation
-    @Getter
-    private double upkeepModifier = 1;
-    public void changeUpkeepModifier(double mod) {
-        upkeepModifier += mod;
-    }
+    private double baseUpkeepModifier = 1;
 
-    // Production modifier encapsulation
-    @Getter
-    private double productionModifier = 1;
-    public void changeProductionModifier(double mod) {
-        productionModifier += mod;
-    }
+    public abstract void changeUpkeepModifier(double mod);
 
-    @Getter
-    private double constructionModifier = 1;
-    public void changeConstructionModifier(double mod) { productionModifier += mod; }
+    private double baseProductionModifier = 1;
+    public abstract void changeProductionModifier(double mod);
+
+    private double baseConstructionModifier = 1;
+    public abstract void changeConstructionModifier(double mod);
 
     // ----------------------------------------------------------------------------------------------------------------
     // Abstract methods to return Maps
     // ----------------------------------------------------------------------------------------------------------------
     public abstract Map<String, Double> getDailyUpkeep();
     public abstract Map<String, Double> getDailyProduction();
-    
+    public abstract Map<String, Double> getConstructionCost();
+
 }
