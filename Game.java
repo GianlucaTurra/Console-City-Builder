@@ -1,6 +1,8 @@
 import Buildings.CropField;
 import Buildings.House;
 import Buildings.Well;
+import CustomErrors.UnknownCommandException;
+import Events.EventsDescription;
 import Settlements.Village;
 
 import java.util.Map;
@@ -13,10 +15,15 @@ public class Game {
     // ----------------------------------------------------------------------------------------------------------------
     static boolean gameIsOn = true;
     public static void game() {
+        System.out.println(EventsDescription.GAME_START.getDescription());
         Village gameVillage = createVillage();
         while(gameIsOn) {
             String userCommand = getUserCommand();
-            receiveCommands(userCommand, gameVillage);
+            try {
+                receiveCommands(userCommand, gameVillage);
+            } catch (UnknownCommandException e) {
+                System.out.println("You entered an invalid command, please try again. ");
+            }
         }
     }
 
@@ -38,19 +45,19 @@ public class Game {
         System.out.print("Enter a command: ");
         return keyboard.nextLine();
     }
-    static void receiveCommands(String command, Village village) {
+    static void receiveCommands(String command, Village village) throws UnknownCommandException {
         switch(command) {
             case "create house":
                 House house = new House();
-                village.addHouse(house);
+                village.addBuilding(house);
                 break;
             case "create crop field":
                 CropField cropField = new CropField();
-                village.addCropField(cropField);
+                village.addBuilding(cropField);
                 break;
             case "create well":
                 Well well = new Well();
-                village.addWell(well);
+                village.addBuilding(well);
                 break;
             case "new day":
                 // new day event
@@ -65,7 +72,7 @@ public class Game {
                 gameIsOn = false;
                 break;
             default:
-                System.out.println("You entered no valid command, please try again. ");
+                throw new UnknownCommandException();
         }
 
     }

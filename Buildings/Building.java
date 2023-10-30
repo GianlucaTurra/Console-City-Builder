@@ -6,24 +6,36 @@ import lombok.Setter;
 import java.util.Map;
 
 @Getter @Setter
-abstract class Building {
+public abstract class Building {
 
     // ----------------------------------------------------------------------------------------------------------------
-    // Default modifiers and abstract methods to change them
+    // BUILDING SIZE
     // ----------------------------------------------------------------------------------------------------------------
-
-    private double baseUpkeepModifier = 1;
-
-    public abstract void changeUpkeepModifier(double mod);
-
-    private double baseProductionModifier = 1;
-    public abstract void changeProductionModifier(double mod);
-
-    private double baseConstructionModifier = 1;
-    public abstract void changeConstructionModifier(double mod);
+    protected int buildingSize = 1;
+    public void changeBuildingSize(int mod) {
+        buildingSize += mod;
+    }
 
     // ----------------------------------------------------------------------------------------------------------------
-    // Abstract methods to return Maps
+    // MODIFIERS AND METHODS TO CHANGE THEM
+    // ----------------------------------------------------------------------------------------------------------------
+    protected double upkeepModifier = 1;
+    public void changeUpkeepModifier(double mod) {
+        upkeepModifier += mod;
+    }
+
+    protected double productionModifier = 1;
+    public void changeProductionModifier(double mod) {
+        productionModifier += mod;
+    }
+
+    protected double constructionModifier = 1;
+    public void changeConstructionModifier(double mod) {
+        constructionModifier += mod;
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // ABSTRACT METHODS TO RETURN MAPS
     // ----------------------------------------------------------------------------------------------------------------
     public abstract Map<String, Double> getDailyUpkeep();
     public abstract Map<String, Double> getDailyProduction();

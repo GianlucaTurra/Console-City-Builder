@@ -1,5 +1,6 @@
 package Settlements;
 
+import Buildings.Building;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,11 +16,11 @@ public abstract class Settlement {
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    // Common settlement attributes
+    // SETTLEMENT ATTRIBUTES
     // ----------------------------------------------------------------------------------------------------------------
-    protected int villageTiles;
+    protected int settlementTiles;
     public void changeVillageTiles(int modifier) {
-        villageTiles += modifier;
+        settlementTiles += modifier;
     }
 
     protected int settlementSize = 0;
@@ -28,7 +29,10 @@ public abstract class Settlement {
     }
 
     protected int settlementPopulation = 0;
-    public void changeVillagePopulation(int modifier) {
-        settlementPopulation += modifier;
-    }
+    public abstract void changeSettlementPopulation(int modifier);
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // SETTLEMENT METHODS
+    // ----------------------------------------------------------------------------------------------------------------
+    public abstract void addBuilding(Building building);
 }

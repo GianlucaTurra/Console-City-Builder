@@ -28,12 +28,6 @@ public class House extends Building{
         return defUpkeepMap;
     }
 
-    private double upkeepModifier = super.getBaseUpkeepModifier();
-    @Override
-    public void changeUpkeepModifier(double mod) {
-        upkeepModifier += mod;
-    }
-
     @Override
     public Map<String, Double> getDailyUpkeep() {
         Map<String, Double> dailyUpkeep = new HashMap<>();
@@ -55,12 +49,6 @@ public class House extends Building{
         return defProdMap;
     }
 
-    private double productionModifier = getBaseProductionModifier();
-    @Override
-    public void changeProductionModifier(double mod) {
-        productionModifier += mod;
-    }
-
     @Override
     public Map<String, Double> getDailyProduction() {
         Map<String, Double> dailyProductionMap = new HashMap<>();
@@ -80,12 +68,6 @@ public class House extends Building{
         defConstMap.put("Water", 0.0);
         defConstMap.put("Stone", 50.0);
         return defConstMap;
-    }
-
-    private double constructionModifier = getBaseConstructionModifier();
-    @Override
-    public void changeConstructionModifier(double mod) {
-        constructionModifier += mod;
     }
 
     public Map<String, Double> getConstructionCost() {

@@ -1,5 +1,6 @@
 package Settlements;
 
+import Buildings.Building;
 import Buildings.CropField;
 import Buildings.House;
 import Buildings.Well;
@@ -21,39 +22,25 @@ public class Village  extends Settlement{
         super(name);
         this.name = super.name;
         setBaseResourceMap();
-        villageHouses = new ArrayList<>();
-        villageCropFields = new ArrayList<>();
-        villageWells = new ArrayList<>();
-        villageTiles = 20;
+        villageBuildings = new ArrayList<>();
+        settlementTiles = 20;
     }
 
     // ----------------------------------------------------------------------------------------------------------------
     // Definition and encapsulation for Buildings list
     // ----------------------------------------------------------------------------------------------------------------
-    private final List<House> villageHouses;
-    private final List<CropField> villageCropFields;
-    private final List<Well> villageWells;
+    private final List<Building> villageBuildings;
 
-    public void addHouse(House house) {
-        if (checkSlots() && checkResources(house.getConstructionCost())) {
-            villageHouses.add(house);
-            applyConstructionCosts(house.getConstructionCost());
+    @Override
+    public void addBuilding(Building building) {
+        if (checkSlots() && checkResources(building.getConstructionCost())) {
+            villageBuildings.add(building);
+            applyConstructionCosts(building.getConstructionCost());
             settlementSize += 1;
-            changeVillagePopulation((int)house.getHouseInhabitants());
-        }
-    }
-    public void addCropField(CropField cropField) {
-        if (checkSlots() && checkResources(cropField.getConstructionCost())) {
-            villageCropFields.add(cropField);
-            applyConstructionCosts(cropField.getConstructionCost());
-            settlementSize += 1;
-        }
-    }
-    public void addWell(Well well) {
-        if (checkSlots() && checkResources(well.getConstructionCost())) {
-            villageWells.add(well);
-            applyConstructionCosts(well.getConstructionCost());
-            settlementSize += 1;
+            // Try to find a better way to add inhabitants if building adds them
+            if (building instanceof House) {
+                changeSettlementPopulation((int) ((House) building).getHouseInhabitants());
+            }
         }
     }
 
@@ -94,18 +81,30 @@ public class Village  extends Settlement{
     // ----------------------------------------------------------------------------------------------------------------
     public void reducePopulation(double killPercentage) {
         int modifier = (int) (settlementPopulation * killPercentage) * (-1);
-        changeVillagePopulation(modifier);
+        changeSettlementPopulation(modifier);
     }
 
     public void changeVillageCropFieldsProduction(double modifier) {
-        villageCropFields.forEach(cropField -> cropField.changeProductionModifier(modifier));
+//        villageCropFields.forEach(cropField -> cropField.changeProductionModifier(modifier));
+        for (Building building: villageBuildings) {
+            if (building instanceof CropField) {
+                System.out.println(building);
+                building.changeProductionModifier(modifier);
+            }
+        }
+    }
+
+
+    @Override
+    public void changeSettlementPopulation(int modifier) {
+        settlementPopulation += modifier;
     }
 
     // ----------------------------------------------------------------------------------------------------------------
     // Utils methods for village methods
     // ----------------------------------------------------------------------------------------------------------------
     private boolean checkSlots() {
-        if (settlementSize == villageTiles) {
+        if (settlementSize == settlementTiles) {
             System.out.println("No more room for buildings in the village!");
             return false;
         } else {

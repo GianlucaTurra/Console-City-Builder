@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Getter
 public class CropField extends Building{
@@ -30,12 +31,6 @@ public class CropField extends Building{
         return defUpkeepMap;
     }
 
-    private double upkeepModifier = getBaseUpkeepModifier();
-    @Override
-    public void changeUpkeepModifier(double mod) {
-        upkeepModifier += mod;
-    }
-
     @Override
     public Map<String, Double> getDailyUpkeep() {
         Map<String, Double> dailyUpkeep = new HashMap<>();
@@ -57,12 +52,6 @@ public class CropField extends Building{
         return defProdMap;
     }
 
-    private double productionModifier = getBaseProductionModifier();
-    @Override
-    public void changeProductionModifier(double mod) {
-        productionModifier += mod;
-    }
-
     @Override
     public Map<String, Double> getDailyProduction() {
         Map<String, Double> dailyProduction = new HashMap<>();
@@ -77,17 +66,11 @@ public class CropField extends Building{
     private static final Map<String, Double> DEFAULT_CONSTRUCTION_COST = initConstructionMap();
     private static Map<String, Double> initConstructionMap() {
         Map<String, Double> defConstMap = new HashMap<>();
-        defConstMap.put("Food", 0.0);
+        defConstMap.put("Food", 10.0);
         defConstMap.put("Wood", 10.0);
         defConstMap.put("Water", 0.0);
         defConstMap.put("Stone", 0.0);
         return defConstMap;
-    }
-
-    private double constructionModifier = getConstructionModifier();
-    @Override
-    public void changeConstructionModifier(double mod) {
-        constructionModifier += mod;
     }
 
     public Map<String, Double> getConstructionCost() {

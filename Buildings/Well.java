@@ -30,12 +30,6 @@ public class Well extends Building {
         return defUpkeepMap;
     }
 
-    private double upkeepModifier = getBaseUpkeepModifier();
-    @Override
-    public void changeUpkeepModifier(double mod) {
-        upkeepModifier += mod;
-    }
-
     @Override
     public Map<String, Double> getDailyUpkeep() {
         Map<String, Double> dailyUpkeep = new HashMap<>();
@@ -58,12 +52,6 @@ public class Well extends Building {
         return defProdMap;
     }
 
-    private double productionModifier = getBaseProductionModifier();
-    @Override
-    public void changeProductionModifier(double mod) {
-        productionModifier += mod;
-    }
-
     @Override
     public Map<String, Double> getDailyProduction() {
         Map<String, Double> dailyProduction = new HashMap<>();
@@ -83,12 +71,6 @@ public class Well extends Building {
         defConstMap.put("Water", 0.0);
         defConstMap.put("Stone", 25.0);
         return defConstMap;
-    }
-
-    private double constructionModifier = getBaseConstructionModifier();
-    @Override
-    public void changeConstructionModifier(double mod) {
-        constructionModifier += mod;
     }
 
     public Map<String, Double> getConstructionCost() {
