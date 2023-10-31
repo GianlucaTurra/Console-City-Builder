@@ -3,9 +3,10 @@ import Buildings.House;
 import Buildings.Well;
 import CustomErrors.UnknownCommandException;
 import Events.EventsDescription;
+import Events.NewDay;
+import Settlements.Settlement;
 import Settlements.Village;
 
-import java.util.Map;
 import java.util.Scanner;
 
 public class Game {
@@ -16,11 +17,11 @@ public class Game {
     static boolean gameIsOn = true;
     public static void game() {
         System.out.println(EventsDescription.GAME_START.getDescription());
-        Village gameVillage = createVillage();
+        Settlement gameSettlement = createSettlement();
         while(gameIsOn) {
             String userCommand = getUserCommand();
             try {
-                receiveCommands(userCommand, gameVillage);
+                receiveCommands(userCommand, gameSettlement);
             } catch (UnknownCommandException e) {
                 System.out.println("You entered an invalid command, please try again. ");
             }
@@ -30,11 +31,11 @@ public class Game {
     // ----------------------------------------------------------------------------------------------------------------
     // Village creation - First step of the game
     // ----------------------------------------------------------------------------------------------------------------
-    static Village createVillage() {
+    static Settlement createSettlement() {
         Scanner keyboard = new Scanner(System.in);
         System.out.print("Enter village name: ");
-        String villageName = keyboard.nextLine();
-        return new Village(villageName);
+        String settlementName = keyboard.nextLine();
+        return new Village(settlementName);
     }
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -45,28 +46,28 @@ public class Game {
         System.out.print("Enter a command: ");
         return keyboard.nextLine();
     }
-    static void receiveCommands(String command, Village village) throws UnknownCommandException {
+    static void receiveCommands(String command, Settlement settlement) throws UnknownCommandException {
         switch(command) {
             case "create house":
                 House house = new House();
-                village.addBuilding(house);
+                settlement.addBuilding(house);
                 break;
             case "create crop field":
                 CropField cropField = new CropField();
-                village.addBuilding(cropField);
+                settlement.addBuilding(cropField);
                 break;
             case "create well":
                 Well well = new Well();
-                village.addBuilding(well);
+                settlement.addBuilding(well);
                 break;
             case "new day":
-                // new day event
+                NewDay.newDay(settlement);
                 break;
             case "show":
-                System.out.println("Village: " + village.getName());
-                System.out.println("Village size: " + village.getSettlementSize());
-                System.out.println("Village population: " + village.getSettlementPopulation());
-                System.out.println("Village resources: " + village.getResourceMap());
+                System.out.println("Village: " + settlement.getName());
+                System.out.println("Village size: " + settlement.getSettlementSize());
+                System.out.println("Village population: " + settlement.getSettlementPopulation());
+                System.out.println("Village resources: " + settlement.getResourceMap());
                 break;
             case "end game":
                 gameIsOn = false;
@@ -74,26 +75,5 @@ public class Game {
             default:
                 throw new UnknownCommandException();
         }
-
-    }
-
-    public static void daySettConsumption(Map<String, Double> settlementResources, Map<String, Double> dailyUpkeep) {
-        for (Map.Entry<String, Double> entry: settlementResources.entrySet()) {
-            String settlementKey = entry.getKey();
-            double settlementValue = entry.getValue();
-            double upkeepValue = dailyUpkeep.get(settlementKey);
-            settlementResources.put(settlementKey, settlementValue - upkeepValue);
-        }
-        System.out.println(settlementResources);
-    }
-
-    public static void daySettProduction(Map<String, Double> settlementResources, Map<String, Double> dailyProduction) {
-        for (Map.Entry<String, Double> entry: settlementResources.entrySet()) {
-            String settlementKey = entry.getKey();
-            double settlementValue = entry.getValue();
-            double productionValue = dailyProduction.get(settlementKey);
-            settlementResources.put(settlementKey, settlementValue + productionValue);
-        }
-        System.out.println(settlementResources);
     }
 }

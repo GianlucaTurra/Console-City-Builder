@@ -3,7 +3,6 @@ package Settlements;
 import Buildings.Building;
 import Buildings.CropField;
 import Buildings.House;
-import Buildings.Well;
 
 import lombok.Getter;
 
@@ -22,19 +21,17 @@ public class Village  extends Settlement{
         super(name);
         this.name = super.name;
         setBaseResourceMap();
-        villageBuildings = new ArrayList<>();
         settlementTiles = 20;
+
     }
 
     // ----------------------------------------------------------------------------------------------------------------
     // Definition and encapsulation for Buildings list
     // ----------------------------------------------------------------------------------------------------------------
-    private final List<Building> villageBuildings;
-
     @Override
     public void addBuilding(Building building) {
         if (checkSlots() && checkResources(building.getConstructionCost())) {
-            villageBuildings.add(building);
+            settlementBuildings.add(building);
             applyConstructionCosts(building.getConstructionCost());
             settlementSize += 1;
             // Try to find a better way to add inhabitants if building adds them
@@ -47,7 +44,6 @@ public class Village  extends Settlement{
     // ----------------------------------------------------------------------------------------------------------------
     // Defining the default production Map
     // ----------------------------------------------------------------------------------------------------------------
-    @Getter
     private static final Map<String, Double> DAILY_PRODUCTION = initDailyProductionMap();
     private static Map<String, Double> initDailyProductionMap() {
         Map<String, Double> defDailyProdMap = new HashMap<>();
@@ -58,11 +54,17 @@ public class Village  extends Settlement{
         return defDailyProdMap;
     }
 
+    @Override
+    public Map<String, Double> getDailyProduction() {
+        return DAILY_PRODUCTION;
+    }
+
     // ----------------------------------------------------------------------------------------------------------------
     // Defining the default resource Map
     // ----------------------------------------------------------------------------------------------------------------
     private final Map<String, Double> resourceMap = new HashMap<>();
 
+    @Override
     public void updateResourceMap(double food, double wood, double water, double stone) {
         resourceMap.put("Food", resourceMap.get("Food") + food);
         resourceMap.put("Wood", resourceMap.get("Wood") + wood);
@@ -84,9 +86,10 @@ public class Village  extends Settlement{
         changeSettlementPopulation(modifier);
     }
 
-    public void changeVillageCropFieldsProduction(double modifier) {
+    @Override
+    public void changeCropFieldsProduction(double modifier) {
 //        villageCropFields.forEach(cropField -> cropField.changeProductionModifier(modifier));
-        for (Building building: villageBuildings) {
+        for (Building building: settlementBuildings) {
             if (building instanceof CropField) {
                 System.out.println(building);
                 building.changeProductionModifier(modifier);
@@ -94,11 +97,15 @@ public class Village  extends Settlement{
         }
     }
 
-
     @Override
     public void changeSettlementPopulation(int modifier) {
         settlementPopulation += modifier;
     }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // VILLAGE MODIFIERS
+    // ----------------------------------------------------------------------------------------------------------------
+    private void initialize
 
     // ----------------------------------------------------------------------------------------------------------------
     // Utils methods for village methods

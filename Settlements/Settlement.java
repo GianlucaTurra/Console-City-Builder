@@ -1,8 +1,14 @@
 package Settlements;
 
 import Buildings.Building;
+import Settlements.modifiers.SettlementModifier;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Getter @Setter
 public abstract class Settlement {
@@ -18,6 +24,8 @@ public abstract class Settlement {
     // ----------------------------------------------------------------------------------------------------------------
     // SETTLEMENT ATTRIBUTES
     // ----------------------------------------------------------------------------------------------------------------
+    protected final List<Building> settlementBuildings = new ArrayList<>();
+
     protected int settlementTiles;
     public void changeVillageTiles(int modifier) {
         settlementTiles += modifier;
@@ -32,7 +40,17 @@ public abstract class Settlement {
     public abstract void changeSettlementPopulation(int modifier);
 
     // ----------------------------------------------------------------------------------------------------------------
+    // SETTLEMENT MODIFIERS
+    // ----------------------------------------------------------------------------------------------------------------
+    protected final Map<String, SettlementModifier> settlementModifierMap = new HashMap<>();
+
+    // ----------------------------------------------------------------------------------------------------------------
     // SETTLEMENT METHODS
     // ----------------------------------------------------------------------------------------------------------------
     public abstract void addBuilding(Building building);
+    public abstract Map<String, Double> getResourceMap();
+    public abstract Map<String, Double> getDailyProduction();
+    public abstract void reducePopulation(double killPercentage);
+    public abstract void changeCropFieldsProduction(double modifier);
+    public abstract void updateResourceMap(double food, double wood, double water, double stone);
 }

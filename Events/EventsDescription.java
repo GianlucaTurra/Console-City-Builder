@@ -2,6 +2,7 @@ package Events;
 
 import lombok.Getter;
 
+@Getter
 public enum EventsDescription {
 
     GAME_START("Welcome to Console City Builder! Build your settlement in 14 days and try to achieve the highest " +
@@ -29,7 +30,6 @@ public enum EventsDescription {
     GIFT_FROM_KING("News of the inhabitants work have arrived to the king's court. Goods are delivered to the" +
             "settlement, use them properly!");
 
-    @Getter
     private final String description;
 
     private EventsDescription(String description) {
