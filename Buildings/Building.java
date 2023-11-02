@@ -1,20 +1,31 @@
 package Buildings;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Map;
 
 @Getter @Setter
+@SuperBuilder
 public abstract class Building {
 
     // ----------------------------------------------------------------------------------------------------------------
-    // BUILDING SIZE
+    // BUILDING STATS
     // ----------------------------------------------------------------------------------------------------------------
+    protected int workersNeeded = 0;
     protected int buildingSize = 1;
+    public void changeWorkersNeeded(int mod) { workersNeeded += mod; }
     public void changeBuildingSize(int mod) {
         buildingSize += mod;
     }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // BUILDING STATS
+    // ----------------------------------------------------------------------------------------------------------------
+
 
     // ----------------------------------------------------------------------------------------------------------------
     // MODIFIERS AND METHODS TO CHANGE THEM

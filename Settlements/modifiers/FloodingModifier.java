@@ -1,18 +1,16 @@
 package Settlements.modifiers;
 
 import Settlements.Settlement;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NonNull;
 
-@Getter
-public class BadHarvestModifier extends SettlementModifier{
+public class FloodingModifier extends SettlementModifier{
 
-    public BadHarvestModifier() {
-        super("Bad Harvest");
+    public FloodingModifier() {
+        super("Flooding");
     }
-    public BadHarvestModifier(int turnCounter) {
-        super(turnCounter, "Bad Harvest");
+
+    public FloodingModifier(int turnCounter) {
+        super(turnCounter, "Flooding");
     }
 
     @Override
@@ -26,7 +24,7 @@ public class BadHarvestModifier extends SettlementModifier{
 
     @Override
     public boolean checkExpiration() {
-        return turnCounter == 0;
+        return (turnCounter == 0);
     }
 
     @Override
@@ -36,6 +34,6 @@ public class BadHarvestModifier extends SettlementModifier{
 
     @Override
     public void revertModifierChanges(@NonNull Settlement settlement) {
-        settlement.changeCropFieldsProduction(0.1);
+        settlement.changeCropFieldsProduction(0.75);
     }
 }

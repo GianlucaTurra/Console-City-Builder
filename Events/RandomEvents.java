@@ -2,6 +2,7 @@ package Events;
 
 import Settlements.Settlement;
 import Settlements.Village;
+import Settlements.modifiers.*;
 import lombok.NonNull;
 
 import java.util.Random;
@@ -24,6 +25,7 @@ public class RandomEvents {
     }
 
     public static void flooding(@NonNull Settlement settlement) {
+        settlement.addModifierToSettlement(new FloodingModifier(3));
         settlement.changeCropFieldsProduction(-0.75);
         settlement.reducePopulation(0.10);
         settlement.getResourceMap().replaceAll((k, v) -> v * 0.90);
@@ -31,21 +33,25 @@ public class RandomEvents {
     }
 
     public static void reallyBadHarvest(@NonNull Settlement settlement) {
+        settlement.addModifierToSettlement(new ReallyBadHarvestModifier(3));
         settlement.changeCropFieldsProduction(-0.25);
         System.out.println(EventsDescription.REALLY_BAD_HARVEST.getDescription());
     }
 
     public static void badHarvest(@NonNull Settlement settlement) {
+        settlement.addModifierToSettlement(new BadHarvestModifier(3));
         settlement.changeCropFieldsProduction(-0.1);
         System.out.println(EventsDescription.BAD_HARVEST.getDescription());
     }
 
     public static void goodHarvest(@NonNull Settlement settlement) {
+        settlement.addModifierToSettlement(new GoodHarvestModifier(3));
         settlement.changeCropFieldsProduction(0.1);
         System.out.println(EventsDescription.GOOD_HARVEST.getDescription());
     }
 
     public static void reallyGoodHarvest(@NonNull Settlement settlement) {
+        settlement.addModifierToSettlement(new ReallyGoodHarvestModifier(3));
         settlement.changeCropFieldsProduction(0.25);
         System.out.println(EventsDescription.REALLY_GOOD_HARVEST.getDescription());
     }

@@ -1,28 +1,24 @@
 package Buildings;
 
+import Settlements.Settlement;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 @Getter
+@SuperBuilder
 public class CropField extends Building{
-
-    // ----------------------------------------------------------------------------------------------------------------
-    // CROP FIELD WORKERS
-    // ----------------------------------------------------------------------------------------------------------------
-    private int workersNeeded = 3;
-    public void changeWorkersNeeded(int workersNeededModifier) {
-        this.workersNeeded += workersNeededModifier;
-    }
 
     // ----------------------------------------------------------------------------------------------------------------
     // CROP FIELD DAILY UPKEEP
     // ----------------------------------------------------------------------------------------------------------------
     @Getter
     private static final Map<String, Double> DEFAULT_UPKEEP = initUpkeepMap();
-    private static Map<String, Double> initUpkeepMap() {
+    private static @NotNull Map<String, Double> initUpkeepMap() {
         Map<String, Double> defUpkeepMap = new HashMap<>();
         defUpkeepMap.put("Food", 0.0);
         defUpkeepMap.put("Wood", 0.0);
@@ -43,7 +39,7 @@ public class CropField extends Building{
     // ----------------------------------------------------------------------------------------------------------------
     @Getter
     private static final Map<String, Double> DEFAULT_PRODUCTION = initProductionMap();
-    private static Map<String, Double> initProductionMap() {
+    private static @NotNull Map<String, Double> initProductionMap() {
         Map<String, Double> defProdMap = new HashMap<>();
         defProdMap.put("Food", 25.0);
         defProdMap.put("Wood", 0.0);

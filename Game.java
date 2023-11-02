@@ -6,6 +6,9 @@ import Events.EventsDescription;
 import Events.NewDay;
 import Settlements.Settlement;
 import Settlements.Village;
+import lombok.NonNull;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Scanner;
 
@@ -31,6 +34,8 @@ public class Game {
     // ----------------------------------------------------------------------------------------------------------------
     // Village creation - First step of the game
     // ----------------------------------------------------------------------------------------------------------------
+    @NotNull
+    @Contract(" -> new")
     static Settlement createSettlement() {
         Scanner keyboard = new Scanner(System.in);
         System.out.print("Enter village name: ");
@@ -46,14 +51,14 @@ public class Game {
         System.out.print("Enter a command: ");
         return keyboard.nextLine();
     }
-    static void receiveCommands(String command, Settlement settlement) throws UnknownCommandException {
+    static void receiveCommands(@NonNull String command, Settlement settlement) throws UnknownCommandException {
         switch(command) {
             case "create house":
                 House house = new House();
                 settlement.addBuilding(house);
                 break;
             case "create crop field":
-                CropField cropField = new CropField();
+                CropField cropField = CropField.builder().workersNeeded(3).build();
                 settlement.addBuilding(cropField);
                 break;
             case "create well":
@@ -68,6 +73,8 @@ public class Game {
                 System.out.println("Village size: " + settlement.getSettlementSize());
                 System.out.println("Village population: " + settlement.getSettlementPopulation());
                 System.out.println("Village resources: " + settlement.getResourceMap());
+                System.out.println("Modifiers...");
+                settlement.printSettlementModifiersMap();
                 break;
             case "end game":
                 gameIsOn = false;

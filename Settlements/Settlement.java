@@ -5,10 +5,7 @@ import Settlements.modifiers.SettlementModifier;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Getter @Setter
 public abstract class Settlement {
@@ -42,11 +39,20 @@ public abstract class Settlement {
     // ----------------------------------------------------------------------------------------------------------------
     // SETTLEMENT MODIFIERS
     // ----------------------------------------------------------------------------------------------------------------
-    protected final Map<String, SettlementModifier> settlementModifierMap = new HashMap<>();
+    protected final Map<String, SettlementModifier> settlementModifiers = new HashMap<>();
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // VILLAGE MODIFIERS
+    // ----------------------------------------------------------------------------------------------------------------
+
+
+    public abstract void addModifierToSettlement(SettlementModifier settlementModifier);
+    public abstract void removeModifierFromSettlement(String modifierName);
 
     // ----------------------------------------------------------------------------------------------------------------
     // SETTLEMENT METHODS
     // ----------------------------------------------------------------------------------------------------------------
+    public abstract void printSettlementModifiersMap();
     public abstract void addBuilding(Building building);
     public abstract Map<String, Double> getResourceMap();
     public abstract Map<String, Double> getDailyProduction();

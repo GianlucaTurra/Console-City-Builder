@@ -1,18 +1,16 @@
 package Settlements.modifiers;
 
 import Settlements.Settlement;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NonNull;
 
-@Getter
-public class BadHarvestModifier extends SettlementModifier{
+public class ReallyBadHarvestModifier extends SettlementModifier {
 
-    public BadHarvestModifier() {
-        super("Bad Harvest");
+    public ReallyBadHarvestModifier() {
+        super("Really Bad Harvest");
     }
-    public BadHarvestModifier(int turnCounter) {
-        super(turnCounter, "Bad Harvest");
+
+    public ReallyBadHarvestModifier(int turnCounter) {
+        super(turnCounter, "Really Bad Harvest");
     }
 
     @Override
@@ -36,6 +34,6 @@ public class BadHarvestModifier extends SettlementModifier{
 
     @Override
     public void revertModifierChanges(@NonNull Settlement settlement) {
-        settlement.changeCropFieldsProduction(0.1);
+        settlement.changeCropFieldsProduction(0.25);
     }
 }

@@ -4,7 +4,9 @@ import Buildings.Building;
 import Buildings.CropField;
 import Buildings.House;
 
+import Settlements.modifiers.SettlementModifier;
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.util.*;
 
@@ -33,7 +35,7 @@ public class Village  extends Settlement{
         if (checkSlots() && checkResources(building.getConstructionCost())) {
             settlementBuildings.add(building);
             applyConstructionCosts(building.getConstructionCost());
-            settlementSize += 1;
+            settlementSize += building.getBuildingSize();
             // Try to find a better way to add inhabitants if building adds them
             if (building instanceof House) {
                 changeSettlementPopulation((int) ((House) building).getHouseInhabitants());
@@ -88,10 +90,8 @@ public class Village  extends Settlement{
 
     @Override
     public void changeCropFieldsProduction(double modifier) {
-//        villageCropFields.forEach(cropField -> cropField.changeProductionModifier(modifier));
         for (Building building: settlementBuildings) {
             if (building instanceof CropField) {
-                System.out.println(building);
                 building.changeProductionModifier(modifier);
             }
         }
@@ -105,7 +105,20 @@ public class Village  extends Settlement{
     // ----------------------------------------------------------------------------------------------------------------
     // VILLAGE MODIFIERS
     // ----------------------------------------------------------------------------------------------------------------
-    private void initialize
+    @Override
+    public void printSettlementModifiersMap() {
+        settlementModifiers.forEach((k, v) -> System.out.print(k + ": " + v.getTurnCounter() + " | "));
+    }
+
+    @Override
+    public void addModifierToSettlement(SettlementModifier settlementModifier) {
+        settlementModifiers.put(settlementModifier.getModifierName(), settlementModifier);
+    }
+
+    @Override
+    public void removeModifierFromSettlement(@NonNull String modifierName) {
+        settlementModifiers.remove(modifierName);
+    }
 
     // ----------------------------------------------------------------------------------------------------------------
     // Utils methods for village methods
