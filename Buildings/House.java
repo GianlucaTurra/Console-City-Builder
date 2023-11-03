@@ -1,6 +1,9 @@
 package Buildings;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,16 +13,18 @@ import java.util.Random;
 public class House extends Building{
 
     // ----------------------------------------------------------------------------------------------------------------
-    // HOUSE INHABITANTS
+    // CONSTRUCTOR
     // ----------------------------------------------------------------------------------------------------------------
-    private final Random random = new Random();
-    private final double houseInhabitants = random.nextInt(10) + 1;
+    private static final Random random = new Random();
+    public House() {
+        super.setPopulation(random.nextInt(10) + 1);
+    }
 
     // ----------------------------------------------------------------------------------------------------------------
     // HOUSE UPKEEP
     // ----------------------------------------------------------------------------------------------------------------
     private static final Map<String, Double> DEFAULT_UPKEEP = initUpkeepMap();
-    private static Map<String, Double> initUpkeepMap() {
+    private static @NotNull Map<String, Double> initUpkeepMap() {
         Map<String, Double> defUpkeepMap = new HashMap<>();
         defUpkeepMap.put("Food", 3.0);
         defUpkeepMap.put("Wood", 5.0);
@@ -31,7 +36,7 @@ public class House extends Building{
     @Override
     public Map<String, Double> getDailyUpkeep() {
         Map<String, Double> dailyUpkeep = new HashMap<>();
-        DEFAULT_UPKEEP.forEach((key, value) -> dailyUpkeep.put(key, value * upkeepModifier * houseInhabitants));
+        DEFAULT_UPKEEP.forEach((key, value) -> dailyUpkeep.put(key, value * upkeepModifier * population));
         return dailyUpkeep;
     }
 
@@ -40,7 +45,7 @@ public class House extends Building{
     // ----------------------------------------------------------------------------------------------------------------
     @Getter
     private static final Map<String, Double> DEFAULT_PRODUCTION = initProductionMap();
-    private static Map<String, Double> initProductionMap() {
+    private static @NotNull Map<String, Double> initProductionMap() {
         Map<String, Double> defProdMap = new HashMap<>();
         defProdMap.put("Food", 0.0);
         defProdMap.put("Wood", 0.0);

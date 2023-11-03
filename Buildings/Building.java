@@ -9,7 +9,6 @@ import lombok.experimental.SuperBuilder;
 import java.util.Map;
 
 @Getter @Setter
-@SuperBuilder
 public abstract class Building {
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -17,15 +16,19 @@ public abstract class Building {
     // ----------------------------------------------------------------------------------------------------------------
     protected int workersNeeded = 0;
     protected int buildingSize = 1;
-    public void changeWorkersNeeded(int mod) { workersNeeded += mod; }
+    protected int population = 0;
+    public void changeWorkersNeeded(int mod) {
+        workersNeeded += mod;
+    }
     public void changeBuildingSize(int mod) {
         buildingSize += mod;
     }
 
-    // ----------------------------------------------------------------------------------------------------------------
-    // BUILDING STATS
-    // ----------------------------------------------------------------------------------------------------------------
+    public Building() {
+        workersNeeded = 0;
+        buildingSize = 1;
 
+    }
 
     // ----------------------------------------------------------------------------------------------------------------
     // MODIFIERS AND METHODS TO CHANGE THEM

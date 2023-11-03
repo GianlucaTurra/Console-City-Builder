@@ -10,7 +10,10 @@ import lombok.NonNull;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Random;
 import java.util.Scanner;
+
+import static Events.NewDay.checkAvailableWorkers;
 
 public class Game {
 
@@ -46,10 +49,10 @@ public class Game {
     // ----------------------------------------------------------------------------------------------------------------
     // USER INPUT
     // ----------------------------------------------------------------------------------------------------------------
-    static String getUserCommand() {
+    static @NotNull String getUserCommand() {
         Scanner keyboard = new Scanner(System.in);
         System.out.print("Enter a command: ");
-        return keyboard.nextLine();
+        return keyboard.nextLine().toLowerCase();
     }
     static void receiveCommands(@NonNull String command, Settlement settlement) throws UnknownCommandException {
         switch(command) {
@@ -58,7 +61,7 @@ public class Game {
                 settlement.addBuilding(house);
                 break;
             case "create crop field":
-                CropField cropField = CropField.builder().workersNeeded(3).build();
+                CropField cropField = new CropField();
                 settlement.addBuilding(cropField);
                 break;
             case "create well":
@@ -74,6 +77,7 @@ public class Game {
                 System.out.println("Village population: " + settlement.getSettlementPopulation());
                 System.out.println("Village resources: " + settlement.getResourceMap());
                 System.out.println("Modifiers...");
+                System.out.println("Unemployed: " + checkAvailableWorkers(settlement));
                 settlement.printSettlementModifiersMap();
                 break;
             case "end game":

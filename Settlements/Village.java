@@ -24,7 +24,6 @@ public class Village  extends Settlement{
         this.name = super.name;
         setBaseResourceMap();
         settlementTiles = 20;
-
     }
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -36,10 +35,7 @@ public class Village  extends Settlement{
             settlementBuildings.add(building);
             applyConstructionCosts(building.getConstructionCost());
             settlementSize += building.getBuildingSize();
-            // Try to find a better way to add inhabitants if building adds them
-            if (building instanceof House) {
-                changeSettlementPopulation((int) ((House) building).getHouseInhabitants());
-            }
+            settlementPopulation += building.getPopulation();
         }
     }
 
@@ -133,9 +129,10 @@ public class Village  extends Settlement{
     }
 
     private boolean checkResources(Map<String, Double> buildingConstructionMap) {
-        for (Map.Entry<String, Double> villageEntry: getResourceMap().entrySet()) {
-            for (Map.Entry<String, Double> buildingEntry: buildingConstructionMap.entrySet()) {
-                if (villageEntry.getValue() - buildingEntry.getValue() < 0) {
+        for (Map.Entry<String, Double> villageEntry : getResourceMap().entrySet()) {
+            for (Map.Entry<String, Double> buildingEntry : buildingConstructionMap.entrySet()) {
+                if (buildingEntry.getValue() == 0.0) continue;
+                if (!((villageEntry.getValue() - buildingEntry.getValue()) >= 0.)) {
                     System.out.println("Not enough " + villageEntry.getKey() + " for this building.");
                     return false;
                 }
@@ -143,6 +140,7 @@ public class Village  extends Settlement{
         }
         return true;
     }
+
 
     private void applyConstructionCosts(Map<String, Double> buildingConstructionMap) {
         resourceMap.forEach((k, v) -> resourceMap.put(k, v - buildingConstructionMap.get(k)));

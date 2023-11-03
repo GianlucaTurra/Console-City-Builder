@@ -1,6 +1,8 @@
 package Buildings;
 
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,19 +11,11 @@ import java.util.Map;
 public class Well extends Building {
 
     // ----------------------------------------------------------------------------------------------------------------
-    // WELL WORKERS
-    // ----------------------------------------------------------------------------------------------------------------
-    private int workersNeeded = 0;
-    public void changeWorkersNeeded(int workersNeededModifier) {
-        workersNeeded += workersNeededModifier;
-    }
-
-    // ----------------------------------------------------------------------------------------------------------------
     // WELL DAILY UPKEEP
     // ----------------------------------------------------------------------------------------------------------------
     @Getter
     private static final Map<String, Double> DEFAULT_UPKEEP = initUpkeepMap();
-    private static Map<String, Double> initUpkeepMap() {
+    private static @NotNull Map<String, Double> initUpkeepMap() {
         Map<String, Double> defUpkeepMap = new HashMap<>();
         defUpkeepMap.put("Food", 0.0);
         defUpkeepMap.put("Wood", 0.0);
@@ -43,7 +37,7 @@ public class Well extends Building {
     // ----------------------------------------------------------------------------------------------------------------
     @Getter
     private static final Map<String, Double> DEFAULT_PRODUCTION = initProductionMap();
-    private static Map<String, Double> initProductionMap() {
+    private static @NotNull Map<String, Double> initProductionMap() {
         Map<String, Double> defProdMap = new HashMap<>();
         defProdMap.put("Food", 0.0);
         defProdMap.put("Wood", 0.0);
@@ -64,7 +58,7 @@ public class Well extends Building {
     // ----------------------------------------------------------------------------------------------------------------
     @Getter
     private static final Map<String, Double> DEFAULT_CONSTRUCTION_COST = initConstructionMap();
-    private static Map<String, Double> initConstructionMap() {
+    private static @NotNull Map<String, Double> initConstructionMap() {
         Map<String, Double> defConstMap = new HashMap<>();
         defConstMap.put("Food", 0.0);
         defConstMap.put("Wood", 0.0);
