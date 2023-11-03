@@ -66,7 +66,7 @@ public class House extends Building{
     // ----------------------------------------------------------------------------------------------------------------
     @Getter
     private static final Map<String, Double> DEFAULT_CONSTRUCTION_COST = initConstructionMap();
-    private static Map<String, Double> initConstructionMap() {
+    private static @NotNull Map<String, Double> initConstructionMap() {
         Map<String, Double> defConstMap = new HashMap<>();
         defConstMap.put("Food", 0.0);
         defConstMap.put("Wood", 50.0);

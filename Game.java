@@ -1,5 +1,6 @@
 import Buildings.CropField;
 import Buildings.House;
+import Buildings.Lumberjack;
 import Buildings.Well;
 import CustomErrors.UnknownCommandException;
 import Events.EventsDescription;
@@ -70,6 +71,10 @@ public class Game {
                 break;
             case "new day":
                 NewDay.newDay(settlement);
+                break;
+            case "create lumberjack":
+                Lumberjack lumberjack = new Lumberjack();
+                settlement.addBuilding(lumberjack);
                 break;
             case "show":
                 System.out.println("Village: " + settlement.getName());
